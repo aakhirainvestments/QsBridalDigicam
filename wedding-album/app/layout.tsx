@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import BuiltBy from '@/components/BuiltBy';
 
 export const metadata: Metadata = {
   title: 'Shared camera roll',
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-paper text-leaf font-serif">
-        <div className="flex flex-col min-h-screen overflow-x-hidden">
+        <div className="relative flex flex-col min-h-screen overflow-x-hidden">
           {children}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             alt=""
             className="mt-8 w-[55%] max-w-[280px] self-start pointer-events-none select-none"
           />
+          <BuiltBy />
         </div>
       </body>
     </html>

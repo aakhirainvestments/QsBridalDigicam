@@ -70,10 +70,18 @@ export default function JoinPage() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/butterfly.png" alt="" className="absolute top-6 right-5 w-20 pointer-events-none select-none" />
       <EventTitle name={event.name} size="lg" />
-      <p className="text-leaf/70 max-w-sm">
-        Take photos on this shared roll. Nobody — not even the host — sees a single one
-        until the album unlocks.
+      <p className="text-leaf/80 max-w-sm leading-relaxed">
+        This works like an old-time film camera. Click away, stay in the moment — all photos
+        will be released at the end of the day.
       </p>
+      <ul className="text-leaf/70 text-sm max-w-xs text-left flex flex-col gap-1.5">
+        <li>✦ You get {event.shot_limit} shots. No previews, no retakes.</li>
+        <li>✦ Follow the shot list for ideas, or shoot whatever you love.</li>
+        <li>
+          ✦ At {reveal.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} the whole album
+          unlocks for everyone to view and save.
+        </li>
+      </ul>
 
       {!alreadyRevealed ? (
         <p className="text-bloom text-sm">

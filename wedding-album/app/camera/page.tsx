@@ -65,7 +65,7 @@ export default function CameraPage() {
 
   return (
     <div className="flex-1 flex flex-col">
-      <header className="text-center pt-6 pb-2 px-4">
+      <header className="text-center pt-4 pb-1 px-4">
         <EventTitle name={event.name} size="sm" />
         {!revealed ? (
           <p className="text-bloom text-xs mt-1">

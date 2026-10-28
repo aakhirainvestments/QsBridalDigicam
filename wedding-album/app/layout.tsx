@@ -19,16 +19,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-paper text-leaf font-serif">
-        <div className="relative flex flex-col min-h-screen overflow-x-hidden">
-          {children}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/flowers.png"
-            alt=""
-            className="mt-8 w-[55%] max-w-[280px] self-start pointer-events-none select-none"
-          />
-          <BuiltBy />
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/flowers.png"
+          alt=""
+          className="fixed bottom-0 left-0 z-0 w-[40%] max-w-[200px] pointer-events-none select-none"
+        />
+        <div className="relative z-10 flex flex-col min-h-[100dvh] overflow-x-hidden">{children}</div>
+        <BuiltBy />
       </body>
     </html>
   );

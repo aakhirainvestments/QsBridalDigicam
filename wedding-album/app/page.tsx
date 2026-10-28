@@ -66,7 +66,7 @@ export default function JoinPage() {
   const alreadyRevealed = reveal.getTime() <= Date.now();
 
   return (
-    <div className="flex-1 relative flex flex-col items-center justify-center px-6 pt-16 gap-6 text-center">
+    <div className="flex-1 relative flex flex-col items-center justify-start px-6 pt-14 pb-16 gap-4 text-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/butterfly.png" alt="" className="absolute top-6 right-5 w-20 pointer-events-none select-none" />
       <EventTitle name={event.name} size="lg" />
@@ -76,7 +76,9 @@ export default function JoinPage() {
       </p>
       <ul className="text-leaf/70 text-sm max-w-xs text-left flex flex-col gap-1.5">
         <li>✦ You get {event.shot_limit} shots. No previews, no retakes.</li>
-        <li>✦ Follow the shot list for ideas, or shoot whatever you love.</li>
+        {(event.prompts?.length ?? 0) > 0 && (
+          <li>✦ Follow the shot list for ideas, or shoot whatever you love.</li>
+        )}
         <li>
           ✦ At {reveal.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} the whole album
           unlocks for everyone to view and save.
@@ -98,14 +100,14 @@ export default function JoinPage() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your name (optional)"
-          className="rounded-full px-5 py-3 text-center bg-leaf/10 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
+          className="rounded-full px-5 py-3 text-center bg-white/90 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
         />
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
           placeholder="Email — get notified when it unlocks (optional)"
-          className="rounded-full px-5 py-3 text-center bg-leaf/10 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
+          className="rounded-full px-5 py-3 text-center bg-white/90 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
         />
         <button
           onClick={join}

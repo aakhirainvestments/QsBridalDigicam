@@ -24,7 +24,7 @@ export default function BuiltBy() {
   }, [open]);
 
   return (
-    <div className="absolute bottom-3 right-3 z-10">
+    <div className="fixed bottom-3 right-3 z-20">
       {open && (
         <>
           <div className="fixed inset-0" onClick={() => setOpen(false)} />

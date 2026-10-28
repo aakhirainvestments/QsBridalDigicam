@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { LOOKS, LookId, makePolaroid } from '@/lib/photoLook';
+import { LOOKS, LookId, drawLooked, makePolaroid } from '@/lib/photoLook';
 
 export default function CameraCapture({
   eventId,
@@ -22,10 +22,11 @@ export default function CameraCapture({
   onShotTaken: (newCount: number) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const previewRef = useRef<HTMLCanvasElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [facing, setFacing] = useState<'environment' | 'user'>('environment');
-  const [look, setLook] = useState<LookId>('kodak');
+  const [look, setLook] = useState<LookId>('tezza');
   const [done, setDone] = useState<string[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const remaining = shotLimit - shotsTaken;
@@ -65,6 +66,24 @@ export default function CameraCapture({
       stream?.getTracks().forEach((t) => t.stop());
     };
   }, [facing]);
+
+  // Live viewfinder: the same film look as the saved photo; selfie camera is mirrored like a mirror.
+  useEffect(() => {
+    let raf = 0;
+    let last = 0;
+    const loop = (t: number) => {
+      raf = requestAnimationFrame(loop);
+      if (t - last < 40) return; // ~25 fps
+      last = t;
+      const v = videoRef.current;
+      const c = previewRef.current;
+      if (!v || !c || !v.videoWidth) return;
+      const ctx = c.getContext('2d', { willReadFrequently: true });
+      if (ctx) drawLooked(ctx, v, c.width, look, facing === 'user');
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [look, facing]);
 
   async function takeShot() {
     if (remaining <= 0 || uploading) return;
@@ -127,22 +146,30 @@ export default function CameraCapture({
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 py-4">
-      <div className="relative w-full max-w-sm aspect-square rounded-2xl overflow-hidden bg-black">
+    <div className="flex flex-col items-center gap-3 py-2">
+      <div
+        className="relative aspect-square rounded-2xl overflow-hidden bg-black"
+        style={{ width: 'min(calc(100vw - 2rem), 24rem, calc(100dvh - 17rem))' }}
+      >
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
-          className="w-full h-full object-cover"
-          style={{ filter: LOOKS[look].css }}
+          className="absolute w-px h-px opacity-0 pointer-events-none"
         />
+        <canvas ref={previewRef} width={360} height={360} className="w-full h-full" />
         <div className="absolute top-3 right-3 bg-black/60 text-white rounded-full px-3 py-1 text-sm font-mono">
           {remaining} left
         </div>
         {selected && (
           <div className="absolute bottom-3 inset-x-3 bg-black/60 text-white rounded-xl px-3 py-2 text-center text-sm">
             {selected}
+          </div>
+        )}
+        {uploading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white text-sm">
+            Developing…
           </div>
         )}
       </div>
@@ -152,9 +179,15 @@ export default function CameraCapture({
       <div className="flex items-center gap-6">
         <button
           onClick={() => setFacing((f) => (f === 'environment' ? 'user' : 'environment'))}
-          className="text-leaf/70 text-sm underline"
+          aria-label="Switch camera"
+          className="w-11 h-11 rounded-full border border-leaf/25 text-leaf/70 flex items-center justify-center active:scale-95 transition"
         >
-          Flip camera
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 12a9 9 0 0 1 15.5-6.2L21 8" />
+            <path d="M21 3v5h-5" />
+            <path d="M21 12a9 9 0 0 1-15.5 6.2L3 16" />
+            <path d="M3 21v-5h5" />
+          </svg>
         </button>
         <button
           onClick={takeShot}
@@ -162,15 +195,15 @@ export default function CameraCapture({
           className="w-16 h-16 rounded-full bg-white border-4 border-bloom/60 shadow disabled:opacity-50 active:scale-95 transition"
           aria-label="Take photo"
         />
+        <div className="w-11" />
       </div>
-      {uploading && <p className="text-leaf/60 text-sm">Developing…</p>}
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto max-w-full px-4 pb-1">
         {(Object.keys(LOOKS) as LookId[]).map((id) => (
           <button
             key={id}
             onClick={() => setLook(id)}
-            className={`rounded-full px-3 py-1 text-sm border transition ${
+            className={`shrink-0 rounded-full px-3 py-1 text-sm border transition ${
               look === id ? 'border-bloom text-bloom bg-bloom/10' : 'border-leaf/20 text-leaf/70'
             }`}
           >

@@ -4,7 +4,7 @@ export default function EventTitle({ name, size = 'lg' }: { name: string; size?:
   const big = size === 'lg';
   return (
     <h1 className="text-center">
-      <span className={`block font-script leading-none ${big ? 'text-7xl' : 'text-5xl'}`}>{first}</span>
+      <span className={`block font-script leading-none ${big ? 'text-6xl' : 'text-5xl'}`}>{first}</span>
       {rest.length > 0 && (
         <span
           className={`block font-sans font-light uppercase tracking-[0.25em] mt-2 ${

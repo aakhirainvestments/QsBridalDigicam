@@ -46,17 +46,26 @@ alter table photos enable row level security;
 -- Kept deliberately open (read/insert only, no delete/update-by-anyone-else) since this
 -- is a single private event link, not a multi-tenant public product. Good enough for a
 -- wedding; do NOT reuse this schema as-is for a public multi-event product.
-create policy if not exists "public read events" on events for select using (true);
-create policy if not exists "public update events notified" on events for update using (true);
-create policy if not exists "public read guests" on guests for select using (true);
-create policy if not exists "public insert guests" on guests for insert with check (true);
-create policy if not exists "public update guests" on guests for update using (true);
-create policy if not exists "public read photos" on photos for select using (true);
-create policy if not exists "public insert photos" on photos for insert with check (true);
+drop policy if exists "public read events" on events;
+create policy "public read events" on events for select using (true);
+drop policy if exists "public update events notified" on events;
+create policy "public update events notified" on events for update using (true);
+drop policy if exists "public read guests" on guests;
+create policy "public read guests" on guests for select using (true);
+drop policy if exists "public insert guests" on guests;
+create policy "public insert guests" on guests for insert with check (true);
+drop policy if exists "public update guests" on guests;
+create policy "public update guests" on guests for update using (true);
+drop policy if exists "public read photos" on photos;
+create policy "public read photos" on photos for select using (true);
+drop policy if exists "public insert photos" on photos;
+create policy "public insert photos" on photos for insert with check (true);
 
-create policy if not exists "storage public read" on storage.objects
+drop policy if exists "storage public read" on storage.objects;
+create policy "storage public read" on storage.objects
   for select using (bucket_id = 'wedding-photos');
-create policy if not exists "storage public insert" on storage.objects
+drop policy if exists "storage public insert" on storage.objects;
+create policy "storage public insert" on storage.objects
   for insert with check (bucket_id = 'wedding-photos');
 
 -- Already ran an earlier version of this file? Run just these two lines instead:

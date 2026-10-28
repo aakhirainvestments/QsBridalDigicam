@@ -79,7 +79,7 @@ function applyLook(ctx: CanvasRenderingContext2D, size: number, look: Look) {
   }
 }
 
-const SCRIPT = `'Allura', 'Snell Roundhand', cursive`;
+const SCRIPT = `'Sacramento', 'Snell Roundhand', cursive`;
 const SERIF = `'Cormorant Garamond', Georgia, serif`;
 
 /** Square-crop the video, apply the film look, and frame it as a polaroid. Returns a JPEG blob. */
@@ -90,7 +90,7 @@ export async function makePolaroid(
 ): Promise<Blob | null> {
   try {
     await Promise.all([
-      document.fonts.load(`64px Allura`),
+      document.fonts.load(`64px Sacramento`),
       document.fonts.load(`600 30px "Cormorant Garamond"`),
     ]);
   } catch {
@@ -123,7 +123,7 @@ export async function makePolaroid(
   ctx.fillStyle = '#5f625d';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
-  let size = 72;
+  let size = 88;
   ctx.font = `${size}px ${SCRIPT}`;
   while (ctx.measureText(eventName).width > PHOTO && size > 28) {
     size -= 2;

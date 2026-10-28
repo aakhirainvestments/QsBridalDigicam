@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { EventRow, revealTime } from '@/lib/types';
 import Countdown from '@/components/Countdown';
+import EventTitle from '@/components/EventTitle';
 
 export default function JoinPage() {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function JoinPage() {
 
   if (!event) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center">
         <p className="text-leaf/60">Loading…</p>
       </div>
     );
@@ -65,8 +66,10 @@ export default function JoinPage() {
   const alreadyRevealed = reveal.getTime() <= Date.now();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 gap-6 text-center">
-      <h1 className="text-5xl font-script leading-tight">{event.name}</h1>
+    <div className="flex-1 relative flex flex-col items-center justify-center px-6 pt-16 gap-6 text-center">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/butterfly.png" alt="" className="absolute top-6 right-5 w-20 pointer-events-none select-none" />
+      <EventTitle name={event.name} size="lg" />
       <p className="text-leaf/70 max-w-sm">
         Take photos on this shared roll. Nobody — not even the host — sees a single one
         until the album unlocks.
@@ -87,19 +90,19 @@ export default function JoinPage() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your name (optional)"
-          className="rounded-lg px-4 py-3 bg-leaf/10 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
+          className="rounded-full px-5 py-3 text-center bg-leaf/10 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
         />
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
           placeholder="Email — get notified when it unlocks (optional)"
-          className="rounded-lg px-4 py-3 bg-leaf/10 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
+          className="rounded-full px-5 py-3 text-center bg-leaf/10 border border-leaf/20 text-leaf placeholder:text-leaf/40 outline-none"
         />
         <button
           onClick={join}
           disabled={loading}
-          className="rounded-lg px-4 py-3 bg-bloom text-paper font-semibold disabled:opacity-50"
+          className="rounded-full px-4 py-3 bg-bloom text-paper font-sans text-xs uppercase tracking-[0.2em] disabled:opacity-50"
         >
           {loading ? 'Joining…' : `Start shooting (${event.shot_limit} shots)`}
         </button>

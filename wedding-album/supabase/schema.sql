@@ -8,7 +8,7 @@ create table if not exists events (
   name text not null,
   start_time timestamptz not null,       -- when the event/reveal-clock starts
   reveal_delay_hours numeric not null default 12,
-  shot_limit integer not null default 10,
+  shot_limit integer not null default 20,
   prompts text[] not null default '{}',   -- the shot list guests see (one string per prompt)
   admin_key text not null,               -- host uses this to view /host dashboard
   notified boolean not null default false, -- flips true once reveal emails have gone out
@@ -80,7 +80,7 @@ create policy "storage public insert" on storage.objects
 -- insert into events (name, start_time, reveal_delay_hours, shot_limit, admin_key, prompts)
 -- values (
 --   'Qudsiyyah''s Fairy Garden Bridal Shower',
---   '2026-11-15T15:00:00+02:00', 5, 10, 'choose-a-secret-string',
+--   '2026-11-15T15:00:00+02:00', 5, 20, 'choose-a-secret-string',
 --   array[
 --     'The bride-to-be, laughing',
 --     'The prettiest flowers you can find',

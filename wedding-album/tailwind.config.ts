@@ -12,7 +12,8 @@ const config: Config = {
         bloom: '#7a5c86',
       },
       fontFamily: {
-        script: ['Allura', 'Snell Roundhand', 'cursive'],
+        script: ['Sacramento', 'Snell Roundhand', 'cursive'],
+        sans: ['Montserrat', 'system-ui', 'sans-serif'],
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
       },
     },

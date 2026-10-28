@@ -49,7 +49,7 @@ export default function HostPage() {
 
   if (!event) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-6">
+      <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6">
         <h1 className="font-serif text-2xl">Host access</h1>
         <input
           value={key}
@@ -68,7 +68,7 @@ export default function HostPage() {
   const reveal = revealTime(event);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-6 text-center">
+    <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6 text-center">
       <h1 className="font-serif text-2xl">{event.name}</h1>
 
       <div className="bg-white p-4 rounded-xl">

@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { EventRow, GuestRow, revealTime } from '@/lib/types';
 import CameraCapture from '@/components/CameraCapture';
 import Countdown from '@/components/Countdown';
+import EventTitle from '@/components/EventTitle';
 
 export default function CameraPage() {
   const router = useRouter();
@@ -54,7 +55,7 @@ export default function CameraPage() {
 
   if (!event || !guest) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center">
         <p className="text-leaf/60">Loading…</p>
       </div>
     );
@@ -63,9 +64,9 @@ export default function CameraPage() {
   const reveal = revealTime(event);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex-1 flex flex-col">
       <header className="text-center pt-6 pb-2 px-4">
-        <h1 className="font-serif text-xl">{event.name}</h1>
+        <EventTitle name={event.name} size="sm" />
         {!revealed ? (
           <p className="text-bloom text-xs mt-1">
             Album unlocks in{' '}

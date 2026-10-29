@@ -204,7 +204,9 @@ export default function CameraCapture({
             key={id}
             onClick={() => setLook(id)}
             className={`shrink-0 rounded-full px-3 py-1 text-sm border transition ${
-              look === id ? 'border-bloom text-bloom bg-bloom/10' : 'border-leaf/20 text-leaf/70'
+              look === id
+                ? 'bg-bloom border-bloom text-white font-semibold shadow'
+                : 'bg-white border-leaf/30 text-leaf shadow-sm'
             }`}
           >
             {LOOKS[id].label}

@@ -2,7 +2,7 @@
 // doesn't support canvas ctx.filter, so we edit pixels directly). The live viewfinder uses the
 // very same function, so what you see is what you get.
 
-export type LookId = 'tezza' | 'kodak' | 'vsco' | 'dreamy' | 'bw' | 'plain';
+export type LookId = 'tezza' | 'disposable' | 'kodak' | 'vsco' | 'dreamy' | 'bw' | 'plain';
 type RGB = [number, number, number];
 
 type Look = {
@@ -28,10 +28,16 @@ export const LOOKS: Record<LookId, Look> = {
     shadow: [-8, 6, 14], highlight: [22, 10, -16],
     fade: 0.16, fadeColor: [70, 50, 40], grain: 0.05, vignette: 0.18,
   },
+  disposable: {
+    label: 'Disposable',
+    contrast: 1.25, brightness: 10, saturation: 1.15, tint: [1.04, 1.0, 0.95],
+    shadow: [-6, 0, 8], highlight: [10, 6, 0],
+    fade: 0.08, fadeColor: [50, 40, 36], grain: 0.14, vignette: 0.32,
+  },
   kodak: {
     label: 'Kodak',
-    contrast: 1.2, brightness: 2, saturation: 1.3, tint: [1.08, 1.03, 0.84],
-    shadow: [8, -2, -14], highlight: [18, 12, -18],
+    contrast: 1.18, brightness: 2, saturation: 1.25, tint: [1.06, 1.02, 0.9],
+    shadow: [8, -2, -10], highlight: [14, 8, -10],
     fade: 0.06, fadeColor: [40, 28, 18], grain: 0.1, vignette: 0.38,
   },
   vsco: {
